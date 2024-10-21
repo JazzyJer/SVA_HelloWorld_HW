@@ -1,0 +1,95 @@
+let emojis = ['🐸', '🐶', '🐼', '🦊', '🐯', '🐱', '🐻‍❄️', '🐰'];
+let randomEmoji; // To hold the selected emoji
+let x, y; // Position of the Animoji
+let button; // Button to change ToD
+let bgColor; // Variable to store the background color
+let sunColor; // Variable to store the sun color
+let hillColor; // Variable to store back hill color
+let hillColor2;// Variable to store front hill color
+let toggle = false; // Variable to toggle between day and night colors
+
+function setup() {
+  createCanvas(600, 500);
+  textFont('monospace'); //Text font for "Animoji title"
+ 
+ 
+
+  // Randomizing Animoji
+  randomEmoji = random(emojis);
+  
+  // Animoji start position
+  x = width / 2;
+  y = height / 2;
+  
+  // Base background
+  bgColor = color(146, 170, 199); // Sky base color
+  sunColor = color(255, 244, 150); // SUn base color
+  hillColor1 = color(60, 145, 57);
+  hillColor2 = color(69, 168, 66);
+      
+
+  // Button for time of day
+  button = createButton('Time of Day');
+  button.position(480, 10);
+  button.mousePressed(toggleColors); //Button change for ToD
+  
+}
+
+function draw() {
+   
+  
+  // Draw for the continous background
+  background(bgColor);
+  fill(254,187,156);
+  strokeWeight(3);
+  stroke(10);
+  textSize(25);
+  text('Animojis', 400,20);
+  
+   // Animoji size and mouse interaction
+  textSize(100); 
+  textAlign(CENTER, CENTER); // Center the text
+  let easing = 0.1; // Adjust the easing value for smoothness
+  x += (mouseX - x) * easing; // Interpolate the x position
+  y += (mouseY - y) * easing; // Interpolate the y position
+
+  // Mountains
+  fill(202, 180, 178);
+  strokeWeight(0);
+  triangle(360, 130, 760, 500, -40, 500);
+  fill(202, 199, 178);
+  strokeWeight(0);
+  triangle(60, 300, 760, 500, -40, 500);
+  
+  // Hills
+  noStroke();
+  fill(hillColor1);
+  ellipse(50, 580, 1000, 400);
+  fill(hillColor2);
+  ellipse(440, 600, 1000, 400);
+  
+  // Sun
+  fill(sunColor);
+  ellipse(40, 10, 400, 400);
+
+  text(randomEmoji, x, y);
+}
+
+// Switch to day and night colors
+function toggleColors() {
+  if (toggle) {
+    // Day colors
+    bgColor = color(146, 170, 199); 
+    sunColor = color(255, 244, 150);
+    hillColor1 = color(60, 145, 57);
+    hillColor2 = color(69, 168, 66);
+  } else {
+    // Night colors
+    bgColor = color(10, 25, 50);
+    sunColor = color(200, 200, 255); 
+    hillColor1 = color(0, 75, 57);
+    hillColor2 = color(9, 108, 66);
+  }
+  
+  toggle = !toggle; 
+}
